@@ -1,0 +1,11 @@
+# gradle
+.gradle
+bin
+build
+!/gradle/wrapper/gradle-wrapper.jar
+
+# IDE
+.idea
+
+# Auto generated
+lombok.config
