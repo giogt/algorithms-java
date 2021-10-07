@@ -1,0 +1,52 @@
+plugins {
+  id "io.freefair.lombok" version "6.2.0"
+}
+
+repositories {
+  mavenCentral()
+  gradlePluginPortal()
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+
+sourceCompatibility = 13
+targetCompatibility = 17
+
+/*
+================================================================================
+unit tests
+================================================================================
+*/
+
+test {
+  useJUnitPlatform()
+}
+
+/*
+================================================================================
+dependencies
+================================================================================
+*/
+
+def versions = [
+    hamcrest: "2.2",
+    junit: "5.8.1",
+    logback: "1.2.6",
+    slf4j: "1.7.32"
+]
+
+dependencies {
+  implementation("org.slf4j:slf4j-api:${versions.slf4j}")
+  runtimeOnly("ch.qos.logback:logback-classic:${versions.logback}")
+
+  // unit tests
+  testImplementation("org.junit.jupiter:junit-jupiter-api:${versions.junit}")
+  testImplementation("org.junit.jupiter:junit-jupiter-params:${versions.junit}")
+  testImplementation("org.hamcrest:hamcrest:${versions.hamcrest}")
+  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${versions.junit}")
+}
+
+compileJava {
+  options.compilerArgs << '-Xlint:unchecked'
+}
