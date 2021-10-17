@@ -1,6 +1,5 @@
 package org.giogt.algorithms.collections;
 
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -10,6 +9,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.stream.Stream;
+
+import static org.hamcrest.MatcherAssert.assertThat;
 
 class PriorityQueueTest {
 
@@ -24,7 +25,7 @@ class PriorityQueueTest {
             new String[]{"h", "b", "z", "x", "y", "a", "f", "l"},
             new String[]{"a", "b", "f", "h", "l", "x", "y", "z"}),
         Arguments.of(
-            (Comparator<String>) (s1, s2) -> s1.compareTo(s2) * -1,
+            ((Comparator<String>) String::compareTo).reversed(),
             // invert the comparison order, for a max heap
             new String[]{"h", "b", "z", "x", "y", "a", "f", "l"},
             new String[]{"z", "y", "x", "l", "h", "f", "b", "a"})
@@ -42,7 +43,7 @@ class PriorityQueueTest {
     priorityQueue.addAll(Arrays.asList(elems));
     for (String expectedElem : expectedElems) {
       String elem = priorityQueue.poll();
-      MatcherAssert.assertThat(elem, Matchers.is(expectedElem));
+      assertThat(elem, Matchers.is(expectedElem));
     }
   }
 }
